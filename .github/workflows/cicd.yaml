@@ -28,27 +28,15 @@ jobs:
         run: |
           echo "Listing WAR files:"
           find . -name "*.war" || echo "No WAR files found!"
-
-      - name: Upload WAR file via SCP
+          
+      - name: Upload WAR to remote server via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.TOMCAT_HOST }}
-          username: ${{ secrets.TOMCAT_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}   # OR use key instead
+          # key: ${{ secrets.SERVER_KEY }}
+          port: 22
           source: "target/*.war"
-          target: "/tmp/"
-
-      - name: Move WAR to Tomcat webapps & restart
-        uses: appleboy/ssh-action@v1.1.0
-        with:
-          host: ${{ secrets.TOMCAT_HOST }}
-          username: ${{ secrets.TOMCAT_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            echo "Moving WAR to Tomcat webapps..."
-            sudo mv /tmp/target/*.war /opt/maven/webapps/
-            echo "Restarting Tomcat..."
-            sudo systemctl restart tomcat
-            sleep 5
-            sudo systemctl status tomcat --no-pager
-            echo "✅ Deployment complete!"
+          target: ${{ secrets.REMOTE_DIR }}
+    

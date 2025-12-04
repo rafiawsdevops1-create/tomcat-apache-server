@@ -1,4 +1,4 @@
-name: Build and Deploy WAR to Apache Tomcat f
+name: Build and Deploy WAR to Apache Tomcat fi
 
 on:
   push:

@@ -29,14 +29,7 @@ jobs:
           echo "Listing WAR files:"
           find . -name "*.war" || echo "No WAR files found!"
 
-      - name: Upload WAR file via SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.TOMCAT_HOST }}
-          username: ${{ secrets.TOMCAT_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "target/*.war"
-          target: "/tmp/"
+   
 
       - name: Move WAR to Tomcat webapps & restart
         uses: appleboy/ssh-action@v1.1.0

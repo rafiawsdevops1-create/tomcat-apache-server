@@ -50,5 +50,5 @@ jobs:
             echo "Restarting Tomcat..."
             sudo systemctl restart tomcat
             sleep 5
-            sudo systemctl status tomcat --no-pager
+            sudo systemctl status tomcat 
             echo "✅ Deployment complete!"
